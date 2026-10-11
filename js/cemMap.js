@@ -77,9 +77,15 @@ function cemMap() {
         var marker = L.geoJSON(data, {
             onEachFeature: function (feature, layer) {
                 if (feature.properties.Default['Profiles Nr.'] > 1) { var s = 's' } else { var s = '' };
+                // Link to the Cemetery Map app, which plots the headstones of this cemetery category
+                var plotMap = '';
+                if (feature.properties.Default['Category Wiki']) {
+                    plotMap = '<br>&nbsp;&nbsp;&rarr; <a target="_blank" href="https://apps.wikitree.com/apps/robinson27225/cemetery-map/index.html?category=' + encodeURIComponent(feature.properties.Default['Category Wiki']) + '"> Headstone Plot Map</a>';
+                }
                 layer.bindPopup('<span style="font-weight: bold;">' + feature.properties.Default.name + '</span><br>' +
                     '&nbsp;&nbsp;&rarr; <a target="_blank" href="https://www.wikitree.com/wiki/Category:' + feature.properties.Default['Category Wiki'] + '">' + feature.properties.Default['Profiles Nr.'] + ' Documented Burial' + s + '</a><br>' +
-                    '&nbsp;&nbsp;&rarr; <a target="_blank" href="https://wikitree.sdms.si/findmap.htm?aid=' + feature.properties.Default.Category + '&grouptype=C"> WikiTree+ Profile Map</a>'
+                    '&nbsp;&nbsp;&rarr; <a target="_blank" href="https://wikitree.sdms.si/findmap.htm?aid=' + feature.properties.Default.Category + '&grouptype=C"> WikiTree+ Profile Map</a>' +
+                    plotMap
                 )
 
             },
